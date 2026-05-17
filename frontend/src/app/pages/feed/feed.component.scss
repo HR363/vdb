@@ -1,0 +1,259 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  animation: fadeUp 0.4s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .page {
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-head h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.page-head p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.radius-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-btn {
+  padding: 10px 16px;
+  min-height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: var(--accent-green);
+    background: var(--bg-secondary);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.active {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+    color: white;
+  }
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px dashed var(--border-color);
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.empty-state p.small {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.post-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+@media (min-width: 768px) {
+  .post-card {
+    padding: 18px;
+    gap: 16px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  }
+}
+
+.post-card__header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-card__seller {
+  font-weight: 600;
+}
+
+.post-card__meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.post-card__image {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  height: 220px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .post-card__image {
+    height: 280px;
+    border-radius: 16px;
+  }
+}
+
+.post-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 23, 42, 0.45);
+  color: #fff;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dot.active {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.post-card__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.post-card__title h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.post-card__title span {
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.post-card__body p {
+  margin: 6px 0 14px;
+  color: var(--text-secondary);
+}
+
+.status-banner {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.ghost-button {
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: transparent;
+  font-weight: 600;
+}

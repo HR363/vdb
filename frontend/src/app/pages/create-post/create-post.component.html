@@ -1,0 +1,79 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h2>Create a Post</h2>
+      <p>Upload images, add details, and publish.</p>
+    </div>
+    <a class="ghost-button" routerLink="/seller-onboarding">Seller profile</a>
+  </div>
+
+  <div class="card form-card">
+    <label>
+      Title
+      <input type="text" [value]="title()" (input)="title.set($any($event.target).value)">
+    </label>
+
+    <label>
+      Price
+      <input type="number" min="0" [value]="price() ?? ''" (input)="price.set($any($event.target).valueAsNumber)">
+    </label>
+
+    <label>
+      Description
+      <textarea rows="3" [value]="description()" (input)="description.set($any($event.target).value)"></textarea>
+    </label>
+
+    <div class="grid-2">
+      <label>
+        Category
+        <input type="text" [value]="category()" (input)="category.set($any($event.target).value)">
+      </label>
+      <label>
+        Stock status
+        <select [value]="stockStatus()" (change)="stockStatus.set($any($event.target).value)">
+          <option value="IN_STOCK">In stock</option>
+          <option value="SOLD_OUT">Sold out</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="grid-2">
+      <label>
+        Collage type
+        <select [value]="collageType()" (change)="collageType.set($any($event.target).value)">
+          <option value="1x1">1x1 single</option>
+          <option value="2-grid">2 grid</option>
+          <option value="3-grid">3 grid</option>
+          <option value="4-grid">4 grid</option>
+        </select>
+      </label>
+      <label>
+        Area label
+        <input type="text" [value]="areaLabel()" (input)="areaLabel.set($any($event.target).value)">
+      </label>
+    </div>
+
+    <label>
+      Images
+      <input id="mediaInput" type="file" accept="image/*" multiple (change)="onFilesSelected($event)">
+    </label>
+
+    <div class="previews" *ngIf="files().length">
+      <div class="preview" *ngFor="let file of files()">
+        <img [src]="file.previewUrl" [alt]="file.name">
+        <div class="preview__meta">
+          <span>{{ file.name }}</span>
+          <span class="badge" [class.done]="file.status === 'done'" [class.error]="file.status === 'error'">
+            {{ file.status }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" (click)="submit()" [disabled]="uploading()">
+      {{ uploading() ? 'Uploading...' : 'Publish post' }}
+    </button>
+
+    <p class="status" *ngIf="status()">{{ status() }}</p>
+  </div>
+</section>

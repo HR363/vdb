@@ -1,0 +1,154 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  animation: fadeUp 0.4s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .page {
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .page-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.page-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.page-head p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+input,
+textarea,
+select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  min-height: 44px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.grid-2 {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .previews {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+.preview {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  aspect-ratio: 1;
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview__meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+}
+
+.badge {
+  text-transform: capitalize;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.badge.done {
+  background: rgba(34, 197, 94, 0.2);
+  color: #16a34a;
+}
+
+.badge.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #dc2626;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}

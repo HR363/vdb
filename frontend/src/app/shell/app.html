@@ -1,0 +1,28 @@
+<div class="min-h-screen flex flex-col" [attr.data-theme]="isDarkMode() ? 'dark' : 'light'">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand__dot">●</span>
+      <span>VibeBuy</span>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/auth" class="ghost-button">OTP Login</a>
+      <button (click)="toggleTheme()" class="ghost-button">
+        {{ isDarkMode() ? '☀️ Light' : '🌙 Dark' }}
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Bottom Navigation Tab (Mobile First) -->
+  <nav class="app-nav">
+    <a routerLink="/" class="nav-item">🏠 Home</a>
+    <a routerLink="/create-post" class="nav-item">➕ Post</a>
+    <a routerLink="/messages" class="nav-item">💬 Messages</a>
+    <a routerLink="/seller-profile" class="nav-item">👤 Seller</a>
+    <a routerLink="/buyer-profile" class="nav-item">🧭 Buyer</a>
+  </nav>
+</div>

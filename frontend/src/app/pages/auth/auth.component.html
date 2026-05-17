@@ -1,0 +1,61 @@
+<section class="page">
+  <div class="hero">
+    <div>
+      <h2>Sign in with OTP</h2>
+      <p>Quick access to buy or sell locally.</p>
+    </div>
+  </div>
+
+  <div class="card form-card" *ngIf="step() === 'request'">
+    <label>
+      Channel
+      <select [value]="channel()" (change)="channel.set($any($event.target).value)">
+        <option value="email">Email</option>
+        <option value="phone">Phone</option>
+      </select>
+    </label>
+
+    <label>
+      Email or phone
+      <input type="text" [value]="identifier()" (input)="identifier.set($any($event.target).value)">
+    </label>
+
+    <label>
+      Role
+      <select [value]="role()" (change)="role.set($any($event.target).value)">
+        <option value="BUYER">Buyer</option>
+        <option value="SELLER">Seller</option>
+      </select>
+    </label>
+
+    <label>
+      Display name (optional)
+      <input type="text" [value]="name()" (input)="name.set($any($event.target).value)">
+    </label>
+
+    <button class="btn-primary" (click)="requestOtp()" [disabled]="loading() || !identifier()">
+      {{ loading() ? 'Sending...' : 'Send OTP' }}
+    </button>
+
+    <p class="status" *ngIf="status()">{{ status() }}</p>
+  </div>
+
+  <div class="card form-card" *ngIf="step() === 'verify'">
+    <label>
+      OTP code
+      <input type="text" [value]="code()" (input)="code.set($any($event.target).value)">
+    </label>
+
+    <div class="dev-code" *ngIf="devCode()">
+      Dev code: <strong>{{ devCode() }}</strong>
+    </div>
+
+    <button class="btn-primary" (click)="verifyOtp()" [disabled]="loading() || !code()">
+      {{ loading() ? 'Verifying...' : 'Verify OTP' }}
+    </button>
+
+    <button class="ghost-button" (click)="reset()">Change details</button>
+
+    <p class="status" *ngIf="status()">{{ status() }}</p>
+  </div>
+</section>

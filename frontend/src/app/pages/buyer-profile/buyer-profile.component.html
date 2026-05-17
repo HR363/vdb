@@ -1,0 +1,107 @@
+<section class="page">
+  <div class="hero">
+    <div>
+      <h2>Buyer Profile</h2>
+      <p>Update your details for faster deals.</p>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="loading()">Loading profile...</div>
+
+  <div class="card form-card" *ngIf="!loading() && buyer()">
+    <label>
+      Display name
+      <input type="text" [value]="name()" (input)="name.set($any($event.target).value)">
+    </label>
+
+    <label>
+      Avatar image
+      <input type="file" accept="image/*" (change)="onAvatarSelected($event)">
+    </label>
+
+    <label class="toggle">
+      <input type="checkbox" [checked]="cropEnabled()" (change)="cropEnabled.set($any($event.target).checked)">
+      Square crop (recommended)
+    </label>
+
+    <div class="crop-preview" *ngIf="cropPreviewUrl()">
+      <div
+        class="crop-box"
+        (pointerdown)="onCropPointerDown($event)"
+        (pointermove)="onCropPointerMove($event)"
+        (pointerup)="onCropPointerUp($event)"
+        (pointerleave)="onCropPointerUp($event)"
+      >
+        <img
+          class="crop-image"
+          [src]="cropPreviewUrl()"
+          [style.transform]="'translate(' + cropOffsetX() * 50 + '%, ' + cropOffsetY() * 50 + '%) scale(' + cropScale() + ')'"
+        >
+        
+        <!-- Crop overlay with 9-box grid -->
+        <div class="crop-overlay">
+          <!-- Grid lines -->
+          <div class="grid-line h1"></div>
+          <div class="grid-line h2"></div>
+          <div class="grid-line v1"></div>
+          <div class="grid-line v2"></div>
+          
+          <!-- Corner handles -->
+          <button class="crop-handle" data-handle="nw" aria-label="Top-left corner"></button>
+          <button class="crop-handle" data-handle="ne" aria-label="Top-right corner"></button>
+          <button class="crop-handle" data-handle="sw" aria-label="Bottom-left corner"></button>
+          <button class="crop-handle" data-handle="se" aria-label="Bottom-right corner"></button>
+          
+          <!-- Edge handles -->
+          <button class="crop-handle edge-h" data-handle="n" aria-label="Top edge"></button>
+          <button class="crop-handle edge-h" data-handle="s" aria-label="Bottom edge"></button>
+          <button class="crop-handle edge-v" data-handle="w" aria-label="Left edge"></button>
+          <button class="crop-handle edge-v" data-handle="e" aria-label="Right edge"></button>
+          
+          <!-- Crop area rectangle -->
+          <div
+            class="crop-area"
+            [style.left.%]="cropLeft() * 100"
+            [style.top.%]="cropTop() * 100"
+            [style.width.%]="(cropRight() - cropLeft()) * 100"
+            [style.height.%]="(cropBottom() - cropTop()) * 100"
+          ></div>
+        </div>
+      </div>
+      <div class="crop-controls">
+        <span>Zoom</span>
+        <input
+          type="range"
+          min="1"
+          max="2.5"
+          step="0.05"
+          [value]="cropScale()"
+          (input)="cropScale.set($any($event.target).valueAsNumber)"
+        >
+      </div>
+    </div>
+
+    <div class="avatar-preview" *ngIf="avatarUrl()">
+      <img [src]="avatarUrl()" alt="Avatar preview">
+      <span class="badge" *ngIf="uploadState()">{{ uploadState()?.status }}</span>
+    </div>
+
+    <div class="upload-progress" *ngIf="uploadState()?.status === 'uploading'">
+      Uploading avatar...
+    </div>
+
+    <div class="upload-actions" *ngIf="uploadState()?.status === 'error'">
+      <button class="ghost-button" (click)="retryAvatarUpload()">Retry upload</button>
+    </div>
+
+    <label>
+      City
+      <input type="text" [value]="city()" (input)="city.set($any($event.target).value)">
+    </label>
+
+    <button class="btn-primary" (click)="save()">Save changes</button>
+    <p class="status" *ngIf="status()">{{ status() }}</p>
+  </div>
+
+  <div class="card" *ngIf="!loading() && !buyer()">No buyer profile yet.</div>
+</section>

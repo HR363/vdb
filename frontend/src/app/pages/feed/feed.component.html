@@ -1,0 +1,117 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h2>Nearby Finds</h2>
+      <p>Discover cool items around you.</p>
+    </div>
+    <a class="ghost-button" routerLink="/create-post">Sell an item</a>
+  </div>
+
+  <div class="status-banner" *ngIf="statusMessage()">
+    {{ statusMessage() }}
+  </div>
+
+  <div class="radius-filters" *ngIf="!loading() && !error()">
+    <button 
+      class="filter-btn" 
+      [class.active]="radiusKm() === 1"
+      (click)="setRadius(1)">
+      1 km
+    </button>
+    <button 
+      class="filter-btn" 
+      [class.active]="radiusKm() === 5"
+      (click)="setRadius(5)">
+      5 km
+    </button>
+    <button 
+      class="filter-btn" 
+      [class.active]="radiusKm() === 10"
+      (click)="setRadius(10)">
+      10 km
+    </button>
+    <button 
+      class="filter-btn" 
+      [class.active]="radiusKm() === 25"
+      (click)="setRadius(25)">
+      25 km
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="loading()">
+    <p>🔍 Finding items nearby...</p>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading() && error()">
+    <p>⚠️ {{ error() }}</p>
+    <p class="small">Make sure the backend is running and has data.</p>
+  </div>
+
+  <div class="feed" *ngIf="!loading() && !error() && posts().length > 0">
+    <article class="post-card" *ngFor="let post of posts()">
+      <header class="post-card__header">
+        <div class="avatar">
+          <img
+            [src]="post.seller?.avatarUrl || 'https://i.pravatar.cc/100?img=5'"
+            alt="Avatar"
+          >
+        </div>
+        <div>
+          <div class="post-card__seller">{{ post.seller?.name || 'Seller' }}</div>
+          <div class="post-card__meta">
+            {{ formatDistance(post.distanceKm) }} • {{ post.areaLabel || post.seller?.city || 'Nearby' }}
+          </div>
+        </div>
+      </header>
+
+      <div class="post-card__image">
+        <img
+          [src]="getCurrentMedia(post)"
+          alt="Product"
+          (touchstart)="onCarouselTouchStart($event)"
+          (touchend)="onCarouselTouchEnd($event, post)"
+        >
+        <button
+          class="carousel-btn left"
+          *ngIf="getMediaList(post).length > 1"
+          (click)="previousMedia(post)"
+        >
+          ‹
+        </button>
+        <button
+          class="carousel-btn right"
+          *ngIf="getMediaList(post).length > 1"
+          (click)="nextMedia(post)"
+        >
+          ›
+        </button>
+        <div class="carousel-dots" *ngIf="getMediaList(post).length > 1">
+          <button
+            class="dot"
+            *ngFor="let item of getMediaList(post); let i = index"
+            [class.active]="i === getCurrentIndex(post)"
+            (click)="setCarouselIndex(post, i)"
+          ></button>
+        </div>
+      </div>
+
+      <div class="post-card__body">
+        <div class="post-card__title">
+          <h3>{{ post.title }}</h3>
+          <span>${{ post.price }}</span>
+        </div>
+        <p>{{ post.description || 'No description yet.' }}</p>
+        <button class="btn-primary" (click)="startConversation(post)">
+          💬 Message Seller
+        </button>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="empty-state" *ngIf="!loading() && !error() && posts().length === 0">
+    <p>📦 No items nearby yet</p>
+    <p class="small">Be the first to sell in your area!</p>
+    <a class="ghost-button" routerLink="/create-post" style="display: inline-block; margin-top: 12px;">Post an Item</a>
+  </div>
+</section>

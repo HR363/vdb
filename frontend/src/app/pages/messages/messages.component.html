@@ -1,0 +1,96 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h2>Messages</h2>
+      <p>Stay close to buyers and sellers.</p>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="loading()">Loading conversations...</div>
+
+  <div class="chat-layout" *ngIf="!loading()">
+    <aside class="chat-list">
+      <button
+        class="chat-list__item"
+        *ngFor="let convo of conversations()"
+        (click)="selectConversation(convo.id)"
+      >
+        <div class="chat-list__avatar">
+          <img [src]="getConversationAvatar(convo)" alt="Avatar">
+        </div>
+        <div>
+          <div class="chat-list__title">{{ getConversationName(convo) }}</div>
+          <div class="chat-list__meta">{{ getLastMessage(convo) }}</div>
+        </div>
+      </button>
+
+      <div class="empty-state" *ngIf="conversations().length === 0">
+        <p>💬 No conversations yet</p>
+        <p class="small">Start a conversation by messaging a seller!</p>
+      </div>
+    </aside>
+
+    <div class="chat-panel" *ngIf="activeConversation() as convo">
+      <div class="chat-panel__header">
+        <div class="chat-panel__header-main">
+          <div class="chat-list__avatar">
+            <img [src]="getConversationAvatar(convo)" alt="Avatar">
+          </div>
+          <div>
+            <div class="chat-panel__title">{{ getConversationName(convo) }}</div>
+            <div class="chat-panel__meta">{{ convo.postId ? '📦 Post context attached' : 'General inquiry' }}</div>
+          </div>
+        </div>
+        <div class="chat-panel__typing" *ngIf="isTyping()">Typing...</div>
+      </div>
+
+      <div class="context-card" *ngIf="convo.post">
+        <div class="context-card__label">Referenced Post</div>
+        <div class="context-card__content">
+          <img [src]="getPostMedia(convo.post)" alt="Product" class="context-card__image">
+          <div class="context-card__details">
+            <div class="context-card__title">{{ convo.post.title }}</div>
+            <div class="context-card__price">${{ convo.post.price }}</div>
+            <div class="context-card__meta">{{ convo.post.seller?.name || 'Seller' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-panel__messages">
+        <div
+          class="message"
+          *ngFor="let message of convo.messages"
+          [class.mine]="isMine(message)"
+          [class.pending]="message.status === 'sending'"
+          [class.failed]="message.status === 'error'"
+        >
+          <div class="message__bubble">
+            {{ message.text }}
+          </div>
+          <div class="message__meta">{{ message.createdAt | date: 'shortTime' }}</div>
+          <button
+            class="message__retry"
+            *ngIf="message.status === 'error' && isMine(message)"
+            (click)="retryMessage(message)"
+          >
+            🔄 Retry
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-panel__composer">
+        <input
+          type="text"
+          placeholder="Type a message"
+          [value]="messageText()"
+          (input)="onMessageInput($any($event.target).value)"
+        >
+        <button class="btn-primary" (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="!activeConversation() && conversations().length">
+      Select a conversation.
+    </div>
+  </div>
+</section>

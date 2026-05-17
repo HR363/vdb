@@ -1,0 +1,31 @@
+<section class="page">
+  <div class="hero">
+    <div>
+      <h2>Become a Seller</h2>
+      <p>Create your seller profile and start posting items in minutes.</p>
+    </div>
+  </div>
+
+  <div class="card form-card">
+    <label>
+      Display name
+      <input type="text" [value]="name()" (input)="name.set($any($event.target).value)">
+    </label>
+
+    <label>
+      Short bio
+      <textarea rows="3" [value]="bio()" (input)="bio.set($any($event.target).value)"></textarea>
+    </label>
+
+    <label>
+      City
+      <input type="text" [value]="city()" (input)="city.set($any($event.target).value)">
+    </label>
+
+    <button class="btn-primary" (click)="submit()" [disabled]="loading() || !name()">
+      {{ loading() ? 'Creating...' : 'Create seller profile' }}
+    </button>
+
+    <p class="status" *ngIf="status()">{{ status() }}</p>
+  </div>
+</section>
